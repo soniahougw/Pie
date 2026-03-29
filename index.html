@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <title>A is for Apple Pie</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="viewer">
+    <!-- Intro overlay — shows on first load, tap to start -->
+    <div id="introOverlay" class="intro-overlay" role="dialog" aria-modal="true" aria-label="Intro">
+      <div class="intro-inner">
+        <svg class="intro-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M1 21h22L12 2 1 21zm13-3h-4v-2h4v2zm0-4h-4v-4h4v4z"/>
+        </svg>
+        <h2 class="intro-title">CAUTION</h2>
+        <p class="intro-sub">TAP TO START</p>
+      </div>
+    </div>
+    <!-- Idle confirmation overlay (appears after inactivity) -->
+    <div id="idleOverlay" class="idle-overlay hidden" role="dialog" aria-modal="true" aria-label="Are you still there?">
+      <div class="idle-inner">
+        <h2 class="idle-title">Are you still there?</h2>
+        <button id="continueBtn" class="continue-btn">Continue viewing</button>
+        <p class="idle-countdown" id="idleCountdown" aria-live="polite"></p>
+      </div>
+    </div>
+    <header class="topbar">
+      <h1 class="title">A is for Apple Pie</h1>
+      <button id="bookmarkBtn" class="bookmark-btn" aria-label="Toggle description" title="Toggle description">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M6 2h8a2 2 0 0 1 2 2v18l-6-3-6 3V4a2 2 0 0 1 2-2z" />
+        </svg>
+      </button>
+      <div class="controls">
+        <button id="prevBtn" aria-label="Previous page">◀</button>
+        <span id="pageIndicator">0 / 0</span>
+        <button id="nextBtn" aria-label="Next page">▶</button>
+      </div>
+    </header>
+
+    <!-- Collection header and gallery -->
+    <section id="collection" class="collection">
+      <h2 id="collectionTitle" class="collection-title">A is for Apple Pie</h2>
+      <div id="collectionStatus" class="collection-status" aria-live="polite"></div>
+      <div id="gallery" class="gallery" aria-live="polite">
+        <!-- thumbnails inserted by app.js (looks for assets/images/a-is-for-apple-pie/manifest.json) -->
+      </div>
+      <!-- single-image viewer (hidden when not used) -->
+      <div id="singleView" class="single-viewer hidden" aria-live="polite"></div>
+    </section>
+
+    <div id="book" class="book" role="application" aria-label="Book viewer">
+      <!-- Pages inserted by app.js (flipbook fallback) -->
+    </div>
+
+    <!-- Lightbox for gallery preview -->
+    <div id="lightbox" class="lightbox" hidden>
+      <img id="lbImg" src="" alt="" />
+    </div>
+
+    <footer class="hint">Swipe left/right or tap arrows to flip pages — optimized for iPad (landscape preferred)</footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
