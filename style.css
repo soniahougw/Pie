@@ -1,17 +1,16 @@
+@import url("https://use.typekit.net/atb4mfs.css");
 /* Basic reset */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body,#book{height:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:hwb(42 83% 2%);color:#000000}
+body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background: linear-gradient(to bottom, #274737 0%, #274737 63%, #F3E9CD 37%, #F3E9CD 100%);color:#F3E9CD}
 .viewer{display:flex;flex-direction:column;height:100vh}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(180deg,rgba(0, 0, 0, 0.03),transparent);backdrop-filter:blur(6px)}
 .topbar{position:relative;z-index:1100}
 .title{font-size:18px}
 .title{cursor:pointer}
-.bookmark-btn{background:transparent;border:0;color:inherit;padding:8px;margin-left:16px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-.bookmark-btn svg{display:block;width:24px;height:24px}
-.bookmark-btn.active{background:rgba(0,0,0,0.06)}
+/* bookmark styles removed — bookmark UI deprecated */
 .controls{display:flex;align-items:center;gap:8px}
-.controls button{background:rgba(255,255,255,0.06);border:0;padding:8px 12px;border-radius:8px;color:#000000;font-size:18px}
+.controls button{background:rgba(255,255,255,0.06);border:0;padding:8px 12px;border-radius:8px;color:#F3E9CD;font-size:18px}
 .controls button:active{transform:scale(.98)}
 #book{flex:1;display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden}
 .book-inner{position:relative;width:100%;height:100%;max-width:1200px;max-height:900px;touch-action:none}
@@ -38,10 +37,58 @@ body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Aria
 
 /* Intro overlay */
 .intro-overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.45));display:flex;align-items:center;justify-content:center;z-index:1200}
-.intro-inner{background:rgba(255,255,255,0.96);padding:36px 48px;border-radius:12px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.35);min-width:320px}
+.intro-inner{
+  background: rgba(255,255,255,0.96);
+  /* Keep a 19:6 (width:height) ratio while remaining responsive */
+  width: min(92vw, 920px);
+  aspect-ratio: 19 / 6;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* push TAP action toward bottom */
+  align-items: center;
+  gap: 6px;
+  /* avoid inner scrolling by scaling text to fit */
+  overflow: hidden;
+  min-width: 320px;
+}
 .intro-icon{width:64px;height:64px;color:#d9534f;margin-bottom:12px}
-.intro-title{font-size:28px;margin:0 0 6px 0;color:#111;letter-spacing:2px}
-.intro-sub{font-size:14px;margin:0;color:#666}
+.intro-title{
+  font-size: clamp(28px, 5.2vw, 56px);
+  margin: 0 0 8px 0;
+  color: #000;
+  letter-spacing: 3px;
+  font-weight: 900;
+  text-transform:uppercase;
+}
+.intro-sub{
+  font-size:14px;
+  margin:0 auto;
+  color:#666;
+  /* left-align text but keep the paragraph block centered within the intro box */
+  text-align:left;
+  width:min(86%,760px);
+  line-height:1.35;
+}
+.intro-sub{
+  font-size: clamp(13px, 1.2vw, 16px);
+  margin: 0 auto;
+  color: #222;
+  text-align: center; /* center the multi-line paragraph */
+  width: min(72%, 720px);
+  line-height: 1.4;
+}
+.intro-action{font-size:18px;margin:10px 0 0 0;color:#777;font-weight:700;letter-spacing:1px}
+.intro-action{
+  font-size: clamp(18px, 2.6vw, 28px);
+  margin: 12px 0 0 0;
+  color: #777;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
 .intro-overlay[aria-hidden="true"]{display:none}
 
 /* helper to prevent body scroll while overlay is visible */
@@ -67,6 +114,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Aria
 .single-viewer .single-controls button{background:rgba(255,255,255,0.06);border:0;padding:8px 12px;border-radius:8px;color:#000000}
 .single-viewer .caption{color:#000000;font-size:14px}
 
+/* hide the small per-image numeric footer (e.g. "1 / 16") shown under images */
+.single-viewer .caption{display:none !important;height:0;margin:0;padding:0}
+
 /* metadata/frame for special pages (e.g., second page) */
 .meta-frame{width:100%;max-width:900px;padding:10px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.9);color:#111;margin-top:8px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
 .meta-frame .meta-line{font-size:13px;line-height:1.4;color:#222}
@@ -75,6 +125,71 @@ body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Aria
 .desc-container{width:100%;max-width:900px;margin-top:12px}
 .desc-input{width:100%;min-height:90px;padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.12);font-size:14px;color:#000;background:transparent;resize:vertical}
 .desc-input::placeholder{color:rgba(0,0,0,0.5)}
+
+/* static page description for specific pages */
+.page-desc{width:100%;max-width:900px;margin-top:12px;padding:12px 14px;border-radius:6px;background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.06);color:#111;font-size:14px;line-height:1.5}
+
+/* remove visible frame/background for specific pages when desired */
+.page-desc.no-bg{background:transparent;border:none;box-shadow:none;padding:8px 0;color:#000}
+
+/* when a page has a bottom-anchored description, push image up so the text sits on the lower (light) background */
+.single-inner.has-bottom-desc{justify-content:flex-end}
+.single-inner.has-bottom-desc img{max-height:60vh}
+
+/* pin certain page descriptions to start at 66% viewport height */
+.page-desc.fixed-at-66{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  top:66vh;
+  width:min(900px,90%);
+  z-index:1250;
+  padding:8px 12px;
+}
+
+/* Icon button + toggle container used for page-specific pop-outs */
+.page-toggle{display:flex;align-items:center;gap:12px;margin-top:12px}
+.icon-button{display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;padding:0;border-radius:0;cursor:pointer;pointer-events:auto}
+.icon-button img{
+  /* larger, responsive icon for FDR toggle button (no frame) */
+  width: clamp(72px, 12vw, 140px);
+  height: clamp(72px, 12vw, 140px);
+  /* ensure the PNG is fully visible and not cropped when shown */
+  object-fit: contain;
+  border-radius:0;
+  box-shadow:none;
+  background:transparent;
+  display:block;
+}
+.page-desc.collapsed{display:none}
+/* ensure toggle sits above the main image if layering causes issues */
+.page-toggle{z-index:1300}
+
+/* (previously had a stacked variant for page 8; page 8 now uses the default inline layout) */
+
+/* lowered-toggle: position the page-toggle (icon + description) below the main image
+   area so the icon sits lower than ~68% of the viewport height. This is used for
+   page 7 and 8. */
+.page-toggle.lowered-toggle{
+  position:fixed;
+  top:70vh; /* lower than 68% as requested */
+  left:50%;
+  transform:translateX(-50%);
+  z-index:1400; /* above images and many overlays */
+  width:auto;
+}
+
+/* small-screen tweak: nudge further down to avoid overlapping the image on narrow viewports */
+@media (max-width:600px){
+  .page-toggle.lowered-toggle{ top:75vh; }
+}
+
+/* right-align helper for page descriptions */
+.page-desc.align-right{text-align:right}
+
+/* split alignment inside a page-desc: main paragraph left, citation on right */
+.page-desc .desc-main{text-align:left}
+.page-desc .desc-cite{text-align:right;display:block;margin-top:8px;color:#444;font-size:13px}
 
 /* simple page flip states */
 .page.prev{z-index:1;transform-origin:left center}

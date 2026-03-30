@@ -20,8 +20,6 @@ const lbImg = document.getElementById('lbImg');
 let galleryMode = false; // when true, show single image viewer (one at a time)
 const topTitle = document.querySelector('.title');
 const hint = document.querySelector('.hint');
-const bookmarkBtn = document.getElementById('bookmarkBtn');
-let descVisible = false; // description box hidden by default
 
 // set collection title
 if(collectionTitle) collectionTitle.textContent = COLLECTION_NAME;
@@ -75,29 +73,7 @@ if(topTitle){
   });
 }
 
-// bookmark toggle to show/hide description
-if(bookmarkBtn){
-  // initially disabled until a page with descriptions is active
-  bookmarkBtn.disabled = true;
-  bookmarkBtn.classList.add('hidden');
-  bookmarkBtn.addEventListener('click', (e)=>{
-    e.preventDefault();
-    descVisible = !descVisible;
-    bookmarkBtn.classList.toggle('active', descVisible);
-    // if opening the description, remove any existing meta-frame immediately to avoid flashes
-    if(descVisible){
-      const mf = document.querySelector('.meta-frame');
-      if(mf && mf.parentNode) mf.parentNode.removeChild(mf);
-    }
-    // re-render single view so description container is created/removed accordingly
-    renderSingle();
-    // focus textarea if visible
-    if(descVisible){
-      const ta = document.querySelector('.desc-container textarea');
-      if(ta) ta.focus();
-    }
-  });
-}
+// Bookmark/description UI removed — redesign planned
 
 // ---------- Idle detection and confirmation overlay ----------
 const idleOverlay = document.getElementById('idleOverlay');
@@ -215,9 +191,26 @@ function renderSingle(){
 
   const wrapper = document.createElement('div');
   wrapper.className = 'single-inner';
+  // if this page will show a bottom description (pages 2-7), anchor content to bottom
+  if(current >= 1 && current <= 6){
+    wrapper.classList.add('has-bottom-desc');
+  } else {
+    wrapper.classList.remove('has-bottom-desc');
+  }
   const img = document.createElement('img');
   img.src = IMAGE_FOLDER + images[current];
   img.alt = `${COLLECTION_NAME} — page ${current + 1}`;
+  // For page 2 (index 1) show a slightly smaller image so the description below fits
+  if(current === 1){
+    img.style.maxHeight = '62vh';
+    img.style.width = 'auto';
+    img.style.objectFit = 'contain';
+  } else {
+    // reset any inline styles for other pages
+    img.style.maxHeight = '';
+    img.style.width = '';
+    img.style.objectFit = '';
+  }
   wrapper.appendChild(img);
 
   const caption = document.createElement('div');
@@ -225,92 +218,168 @@ function renderSingle(){
   caption.textContent = `${current + 1} / ${images.length}`;
   wrapper.appendChild(caption);
 
-  // ----- Special metadata/frame for second page (index 1) -----
-  // If viewing the second page, show a small metadata frame with collection details
-  // only show the meta/frame when viewing page 2 and the description is NOT visible
-  if(current === 1 && !descVisible){
-    const meta = document.createElement('div');
-    meta.className = 'meta-frame';
-    // Provided context lines
-    const lines = [
-      'A Is For Apple Pie',
-      '1880-1920',
-      'textile',
-      'The United States and England',
-      '13.30 H x 6.80 W x 2.20 D cm (5 1/4 H x 2 11/16 W x 7/8 D in)'
-    ];
-    lines.forEach((t)=>{
-      const p = document.createElement('div');
-      p.className = 'meta-line';
-      p.textContent = t;
-      meta.appendChild(p);
-    });
-    wrapper.appendChild(meta);
-    // Also ensure the description storage for this page is pre-populated with the same block
-    try{
-      const key = `desc:${images[current]}`;
-      const existing = localStorage.getItem(key);
-      const combined = lines.join('\n');
-      if(!existing) localStorage.setItem(key, combined);
-    }catch(_){/* ignore storage errors */}
+  // Add a static descriptive block under the image for the second page (index 1)
+  if(current === 1){
+    const desc = document.createElement('div');
+    desc.className = 'page-desc';
+    desc.classList.add('no-bg');
+    desc.innerText = `The front cover is adorned with a faded cloth image of an apple pie, the back cover features a cloth image of a Black child, and the inner pages tell the story of a Black child interacting with an apple pie: for example, "B - Bit it," and "C - Cut it." Most of the book's cover and pages are made of linen and cotton. The spine is made of velvet, and the back cover uses a bit of handmade lace. Most of the cloth is made with a plain weave, but the cover material uses a satin weave.`;
+    wrapper.appendChild(desc);
   }
 
-  // show editable description for pages 2..14 (1-based numbering -> indices 1..13)
-  const descStart = 1;
-  const descEnd = 13;
-  if(current >= descStart && current <= descEnd){
-    // show bookmark button for pages that support descriptions
-    if(bookmarkBtn) {
-      bookmarkBtn.disabled = false;
-      bookmarkBtn.classList.remove('hidden');
-      bookmarkBtn.classList.toggle('active', !!descVisible);
-    }
-    // only create and append the description container when the user has toggled it visible
-    if(descVisible){
-      const descWrap = document.createElement('div');
-      descWrap.className = 'desc-container';
-      const textarea = document.createElement('textarea');
-      textarea.className = 'desc-input';
-      textarea.placeholder = 'Add a description for this page...';
-      // load saved description from localStorage (keyed by filename)
-      try{
-        const key = `desc:${images[current]}`;
-        const saved = localStorage.getItem(key) || '';
-        textarea.value = saved;
-        // autosave on input (debounced simple)
-        let t = null;
-        textarea.addEventListener('input', (e)=>{
-          clearTimeout(t);
-          t = setTimeout(()=>{
-            try{ localStorage.setItem(key, textarea.value); }catch(_){/* ignore */}
-          }, 450);
-        });
-      }catch(_){ /* ignore storage errors */ }
-      descWrap.appendChild(textarea);
-      wrapper.appendChild(descWrap);
-      // hide the footer/hint area when the description is visible
-      if(hint) hint.classList.add('hidden');
-    } else {
-      if(hint) hint.classList.remove('hidden');
-    }
-  } else {
-    if(hint) hint.classList.remove('hidden');
-    if(bookmarkBtn) { bookmarkBtn.disabled = true; bookmarkBtn.classList.remove('active'); bookmarkBtn.classList.add('hidden'); }
+  // Add a static descriptive block under the image for the third page (index 2)
+  if(current === 2){
+    const desc3 = document.createElement('div');
+    desc3.className = 'page-desc';
+    desc3.classList.add('no-bg');
+    desc3.innerText = `The book is hand-stitched. Much of the stitching is neat and uniform, but certain areas (the inside of the covers) use larger, messier stitches (handmade).`;
+  if(current >= 2 && current <= 15 && current !== 6) desc3.classList.add('fixed-at-66');
+    wrapper.appendChild(desc3);
   }
+
+  // Add a static descriptive block under the image for the fifth page (index 4)
+  if(current === 4){
+    const desc5 = document.createElement('div');
+    desc5.className = 'page-desc';
+    desc5.classList.add('no-bg');
+    desc5.innerText = `The A was an Apple Pie alphabet rhyme that can be traced back to 17th century England, but remained popular into the 20th century. Some of the usual narrative has been changed in this apple pie booklet. Instead of "Dealt it" and "Eat it" this book says "Danced for it" and "Exclaimed at it." These adjustments could serve to further the racial stereotypes the book depicts — dancing, especially, is a minstrel trope.`;
+  if(current >= 2 && current <= 15 && current !== 6) desc5.classList.add('fixed-at-66');
+    wrapper.appendChild(desc5);
+  }
+
+  // Add a static descriptive block under the image for the sixth page (index 5)
+  if(current === 5){
+    const desc6 = document.createElement('div');
+    desc6.className = 'page-desc';
+    desc6.classList.add('no-bg');
+    desc6.innerText = `The typical minstrel performer would don blackface, darkened to the extreme, with red paint around the lips — these characteristics are present in the apple pie book. Based on this minstrel history and the type of imagery in the apple pie book, we can fairly confidently narrow the timeframe in which the book was made to about 1880-1920 (post Civil War and pre WWII), when popular culture was most heavily saturated with this type of imagery.`;
+  if(current >= 2 && current <= 15 && current !== 6) desc6.classList.add('fixed-at-66');
+    wrapper.appendChild(desc6);
+  }
+
+  // Add an icon-button which toggles a pop-out description on the seventh page (index 6)
+  if(current === 6){
+    const toggleWrap = document.createElement('div');
+    toggleWrap.className = 'page-toggle';
+
+    const btn = document.createElement('button');
+    btn.className = 'icon-button';
+    btn.type = 'button';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Show FDR note');
+
+    const icon = document.createElement('img');
+    // use the provided file from the collection folder
+    icon.src = IMAGE_FOLDER + 'FDR 1.png';
+    icon.alt = 'FDR image';
+    btn.appendChild(icon);
+
+  const desc7 = document.createElement('div');
+  // make the NPR citation its own third line and right-align the block
+    desc7.className = 'page-desc collapsed';
+    desc7.classList.add('no-bg');
+    desc7.innerHTML = `
+      <div class="desc-main">During the Great Depression, Barnes notes that President Franklin D. Roosevelt's Works Progress Administration sought to "preserve American heritage" by promoting blackface.</div>
+      <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
+    `;
+  // keep page 7's pop-out description in-flow (beside the button) rather than fixed at 66vh
+  if(current >= 2 && current <= 15 && current !== 6) desc7.classList.add('fixed-at-66');
+
+    function toggleDesc7(){
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      desc7.classList.toggle('collapsed');
+      // ensure style state for older browsers
+      if(desc7.classList.contains('collapsed')){
+        desc7.style.display = 'none';
+      } else {
+        desc7.style.display = '';
+      }
+      // reset idle timer so it doesn't immediately return to intro while reading
+      try{ resetIdleTimer(); }catch(_){ }
+    }
+    btn.addEventListener('click', toggleDesc7);
+    // also handle touchstart for better responsiveness on mobile and keyboard
+    btn.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc7(); });
+    btn.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc7(); } });
+
+    toggleWrap.appendChild(btn);
+    toggleWrap.appendChild(desc7);
+    // lower the toggle so it sits below the main image area (below ~68% of viewport)
+    toggleWrap.classList.add('lowered-toggle');
+    wrapper.appendChild(toggleWrap);
+  }
+
+  // Add an icon-button which toggles a description below the image on the eighth page (index 7)
+  if(current === 7){
+    const toggleWrap8 = document.createElement('div');
+  // use the inline/default row layout so the description appears beside the button
+  toggleWrap8.className = 'page-toggle';
+
+    const btn8 = document.createElement('button');
+    btn8.className = 'icon-button';
+    btn8.type = 'button';
+    btn8.setAttribute('aria-expanded', 'false');
+    btn8.setAttribute('aria-label', 'Show banjo note');
+
+    const icon8 = document.createElement('img');
+    // use the provided file from the collection folder
+    icon8.src = IMAGE_FOLDER + 'Banjo.png';
+    icon8.alt = 'Banjo image';
+    btn8.appendChild(icon8);
+
+    const desc8 = document.createElement('div');
+    // the description is initially collapsed/hidden and will appear under the button
+    desc8.className = 'page-desc collapsed';
+    desc8.classList.add('no-bg');
+    desc8.innerHTML = `
+      <div class="desc-main">Ties to music (songs → dance → blackface shows); “What's interesting about those songs is they are romanticizing the relationship between an enslaved person and their enslaver. And so when we have commentary, even from the president now, who recently said slavery wasn't so bad, well, slavery was horrific, but if you were raised on a diet of Stephen Foster music, and going to minstrel shows, you can somewhat understand how somebody at the time could easily be led to believe that slavery was a grand old party because that's what it was supposed to be telling you. It's pro-slavery propaganda.”</div>
+      <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
+    `;
+
+    function toggleDesc8(){
+      const expanded = btn8.getAttribute('aria-expanded') === 'true';
+      btn8.setAttribute('aria-expanded', String(!expanded));
+      desc8.classList.toggle('collapsed');
+      if(desc8.classList.contains('collapsed')){
+        desc8.style.display = 'none';
+      } else {
+        desc8.style.display = '';
+      }
+      try{ resetIdleTimer(); }catch(_){ }
+    }
+    btn8.addEventListener('click', toggleDesc8);
+    btn8.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc8(); });
+    btn8.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc8(); } });
+
+    toggleWrap8.appendChild(btn8);
+    toggleWrap8.appendChild(desc8);
+    // lower the toggle for page 8 as well so icon sits below ~68% of viewport
+    toggleWrap8.classList.add('lowered-toggle');
+    wrapper.appendChild(toggleWrap8);
+  }
+
+  // no per-page descriptions for now — always show hint/footer
+  if(hint) hint.classList.remove('hidden');
 
   singleView.appendChild(wrapper);
 
   pageIndicator.textContent = `${current + 1} / ${images.length}`;
   // with looping enabled, only disable when there are no images or a single image
-  prevBtn.disabled = images.length <= 1;
+  // hide previous button on the first page so the arrow shape isn't visible
+  const prevHidden = images.length <= 1 || current === 0;
+  prevBtn.disabled = prevHidden;
+  prevBtn.classList.toggle('hidden', prevHidden);
+  try{ prevBtn.setAttribute('aria-disabled', prevHidden ? 'true' : 'false'); }catch(_){ }
+
   nextBtn.disabled = images.length <= 1;
 }
 
 function changeCurrent(n){
   if(images.length === 0) return;
-  // wrap around
-  if(n < 0) n = images.length - 1;
-  if(n >= images.length) n = 0;
+  // clamp at start (do not wrap backward from first page), but allow forward wrap
+  if(n < 0) n = 0;
+  if(n >= images.length) n = 0; // keep forward wrap to first
   current = n;
   renderSingle();
 }
