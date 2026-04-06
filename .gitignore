@@ -1,0 +1,15 @@
+/.DS_Store
+*.DS_Store
+/.vscode/
+/.idea/
+/.cache/
+__pycache__/
+node_modules/
+/.parcel-cache/
+/.next/
+dist/
+coverage/
+
+# Ignore OS generated files
+Thumbs.db
+.DS_Store
