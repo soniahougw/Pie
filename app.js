@@ -191,6 +191,9 @@ function renderSingle(){
 
   const wrapper = document.createElement('div');
   wrapper.className = 'single-inner';
+  // expose the current page index as a data attribute so CSS can target page-specific
+  // selectors (useful for making page 10 toggles default to the lowered position)
+  wrapper.setAttribute('data-page', String(current));
   // if this page will show a bottom description (pages 2-7), anchor content to bottom
   if(current >= 1 && current <= 6){
     wrapper.classList.add('has-bottom-desc');
@@ -237,12 +240,22 @@ function renderSingle(){
     wrapper.appendChild(desc3);
   }
 
+  // Add a static descriptive block under the image for the fourth page (index 3)
+  if(current === 3){
+    const desc4 = document.createElement('div');
+    desc4.className = 'page-desc';
+    desc4.classList.add('no-bg');
+    desc4.innerText = `The A was an Apple Pie alphabet rhyme that can be traced back to 17th century England, but remained popular into the 20th century.`;
+    if(current >= 2 && current <= 15 && current !== 6) desc4.classList.add('fixed-at-66');
+    wrapper.appendChild(desc4);
+  }
+
   // Add a static descriptive block under the image for the fifth page (index 4)
   if(current === 4){
     const desc5 = document.createElement('div');
     desc5.className = 'page-desc';
     desc5.classList.add('no-bg');
-    desc5.innerText = `The A was an Apple Pie alphabet rhyme that can be traced back to 17th century England, but remained popular into the 20th century. Some of the usual narrative has been changed in this apple pie booklet. Instead of "Dealt it" and "Eat it" this book says "Danced for it" and "Exclaimed at it." These adjustments could serve to further the racial stereotypes the book depicts — dancing, especially, is a minstrel trope.`;
+    desc5.innerText = `Some of the usual narrative has been changed in this apple pie booklet. Instead of "Dealt it" and "Eat it" this book says "Danced for it" and "Exclaimed at it." These adjustments could serve to further the racial stereotypes the book depicts — dancing, especially, is a minstrel trope.`;
   if(current >= 2 && current <= 15 && current !== 6) desc5.classList.add('fixed-at-66');
     wrapper.appendChild(desc5);
   }
@@ -274,6 +287,15 @@ function renderSingle(){
     icon.alt = 'FDR image';
     btn.appendChild(icon);
 
+    // create an icon box that holds the button and a label beneath it
+    const iconBox = document.createElement('div');
+    iconBox.className = 'icon-box';
+    iconBox.appendChild(btn);
+    const label7 = document.createElement('div');
+    label7.className = 'icon-label';
+    label7.textContent = 'FDR President';
+    iconBox.appendChild(label7);
+
   const desc7 = document.createElement('div');
   // make the NPR citation its own third line and right-align the block
     desc7.className = 'page-desc collapsed';
@@ -303,8 +325,8 @@ function renderSingle(){
     btn.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc7(); });
     btn.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc7(); } });
 
-    toggleWrap.appendChild(btn);
-    toggleWrap.appendChild(desc7);
+  toggleWrap.appendChild(iconBox);
+  toggleWrap.appendChild(desc7);
     // lower the toggle so it sits below the main image area (below ~68% of viewport)
     toggleWrap.classList.add('lowered-toggle');
     wrapper.appendChild(toggleWrap);
@@ -328,7 +350,16 @@ function renderSingle(){
     icon8.alt = 'Banjo image';
     btn8.appendChild(icon8);
 
-    const desc8 = document.createElement('div');
+  // create icon box + label for page 8
+  const iconBox8 = document.createElement('div');
+  iconBox8.className = 'icon-box';
+  iconBox8.appendChild(btn8);
+  const label8 = document.createElement('div');
+  label8.className = 'icon-label';
+  label8.textContent = 'Stephen Foster';
+  iconBox8.appendChild(label8);
+
+  const desc8 = document.createElement('div');
     // the description is initially collapsed/hidden and will appear under the button
     desc8.className = 'page-desc collapsed';
     desc8.classList.add('no-bg');
@@ -352,12 +383,176 @@ function renderSingle(){
     btn8.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc8(); });
     btn8.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc8(); } });
 
-    toggleWrap8.appendChild(btn8);
-    toggleWrap8.appendChild(desc8);
+  toggleWrap8.appendChild(iconBox8);
+  toggleWrap8.appendChild(desc8);
     // lower the toggle for page 8 as well so icon sits below ~68% of viewport
     toggleWrap8.classList.add('lowered-toggle');
     wrapper.appendChild(toggleWrap8);
   }
+
+    // Add an icon-button which toggles a description below the image on the ninth page (index 8)
+    if(current === 8){
+      const toggleWrap9 = document.createElement('div');
+    // use the inline/default row layout so the description appears beside the button
+    toggleWrap9.className = 'page-toggle';
+
+      const btn9 = document.createElement('button');
+      btn9.className = 'icon-button';
+      btn9.type = 'button';
+      btn9.setAttribute('aria-expanded', 'false');
+      btn9.setAttribute('aria-label', 'Show show-1 note');
+
+      const icon9 = document.createElement('img');
+      icon9.src = IMAGE_FOLDER + 'show 1.png';
+      icon9.alt = 'Show 1 image';
+      btn9.appendChild(icon9);
+
+    // create icon box + label for page 9
+    const iconBox9 = document.createElement('div');
+    iconBox9.className = 'icon-box';
+    iconBox9.appendChild(btn9);
+    const label9 = document.createElement('div');
+    label9.className = 'icon-label';
+    label9.textContent = 'Minstrel Show';
+    iconBox9.appendChild(label9);
+
+    const desc9 = document.createElement('div');
+      desc9.className = 'page-desc collapsed';
+      desc9.classList.add('no-bg');
+      desc9.innerHTML = `
+        <div class="desc-main">"Make America Great Again" or "This Is Our Country" or "Take Back Our Country" are all slogans and songs that were very common in minstrel shows. And so a lot of minstrel shows reinterpreted slavery in a fantastical way, that the Civil War ended and that in these minstrel shows there was Black rule and that everything America held dear was desecrated. And so this [blackface] "Zip" character … sometimes he's named "Rastus" — he has different names that he goes by — runs for office, political office, becomes president, and the first thing he does is he takes away America's guns. Sound familiar? And so a lot of these terms that you could perhaps say [are] dog whistles in white of supremacy are taken line for line from these minstrel shows.</div>
+        <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
+      `;
+
+      function toggleDesc9(){
+        const expanded = btn9.getAttribute('aria-expanded') === 'true';
+        btn9.setAttribute('aria-expanded', String(!expanded));
+        desc9.classList.toggle('collapsed');
+        if(desc9.classList.contains('collapsed')){
+          desc9.style.display = 'none';
+        } else {
+          desc9.style.display = '';
+        }
+        try{ resetIdleTimer(); }catch(_){ }
+      }
+      btn9.addEventListener('click', toggleDesc9);
+      btn9.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc9(); });
+      btn9.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc9(); } });
+
+    toggleWrap9.appendChild(iconBox9);
+    toggleWrap9.appendChild(desc9);
+      // lower the toggle for page 9 as well so icon sits below ~68% of viewport
+      toggleWrap9.classList.add('lowered-toggle');
+      wrapper.appendChild(toggleWrap9);
+    }
+
+    // Add an icon-button which toggles a description on the eleventh page (index 10)
+    if(current === 10){
+      const toggleWrap10 = document.createElement('div');
+  // use the inline/default row layout so the description appears beside the button (match page 9)
+  toggleWrap10.className = 'page-toggle';
+
+      const btn10 = document.createElement('button');
+      btn10.className = 'icon-button';
+      btn10.type = 'button';
+      btn10.setAttribute('aria-expanded', 'false');
+      btn10.setAttribute('aria-label', 'Show PTA note');
+
+      const icon10 = document.createElement('img');
+      icon10.src = IMAGE_FOLDER + 'pta.png';
+      icon10.alt = 'PTA image';
+      btn10.appendChild(icon10);
+
+    // create icon box + label for page 10
+    const iconBox10 = document.createElement('div');
+    iconBox10.className = 'icon-box';
+    iconBox10.appendChild(btn10);
+    const label10 = document.createElement('div');
+    label10.className = 'icon-label';
+    label10.textContent = 'History Fact';
+    iconBox10.appendChild(label10);
+
+    const desc10 = document.createElement('div');
+      desc10.className = 'page-desc collapsed';
+      desc10.classList.add('no-bg');
+      desc10.innerHTML = `
+        <div class="desc-main">Betty Reid, who had just integrated this neighborhood and her son integrated Park Mead Elementary, is horrified to discover that the first thing that her son is supposed to witness is a blackface show put on by the school principal and the PTA. And the show that they're doing is actually one of the shows that was recommended by the WPA, written and created by the WPA, called "Weep No More," which is from a Stephen Foster song. And so these Black mothers decide, through various means, that they need to organize to stop this because they understand - rightfully so - that the fight against lynching, against desegregation, voting rights, all comes down to an issue of dehumanization, and that that is what minstrelsy is. It is a mass dehumanization and caricature of Black life. And by 1970, most of these publishing houses were going under because of the incredible work of Black and white mothers who worked with them. There were a lot of Jewish American mothers who were concerned by this, but also people who were moved by the Civil Rights Movement, who said, I don't want my child performing this, and I don't want to perform this. This is not acceptable.</div>
+        <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
+      `;
+
+      function toggleDesc10(){
+        const expanded = btn10.getAttribute('aria-expanded') === 'true';
+        btn10.setAttribute('aria-expanded', String(!expanded));
+        desc10.classList.toggle('collapsed');
+        if(desc10.classList.contains('collapsed')){
+          desc10.style.display = 'none';
+        } else {
+          desc10.style.display = '';
+        }
+        try{ resetIdleTimer(); }catch(_){ }
+      }
+      btn10.addEventListener('click', toggleDesc10);
+      btn10.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc10(); });
+      btn10.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc10(); } });
+
+    toggleWrap10.appendChild(iconBox10);
+    toggleWrap10.appendChild(desc10);
+      // lower the toggle for page 10 as well so icon sits at the same vertical placement as page 9
+      toggleWrap10.classList.add('lowered-toggle');
+      wrapper.appendChild(toggleWrap10);
+    }
+
+    // Add an icon-button which toggles a description on the tenth page (index 9)
+    if(current === 9){
+      const toggleWrapFact = document.createElement('div');
+      // stacked layout: button above description so the description appears below when opened
+      toggleWrapFact.className = 'page-toggle stacked';
+
+      const btnFact = document.createElement('button');
+      btnFact.className = 'icon-button';
+      btnFact.type = 'button';
+      btnFact.setAttribute('aria-expanded', 'false');
+      btnFact.setAttribute('aria-label', 'Show history fact');
+
+      const iconFact = document.createElement('img');
+      iconFact.src = IMAGE_FOLDER + 'fact 1.png';
+      iconFact.alt = 'Fact 1 image';
+      btnFact.appendChild(iconFact);
+
+      // icon box + label
+      const iconBoxFact = document.createElement('div');
+      iconBoxFact.className = 'icon-box';
+      iconBoxFact.appendChild(btnFact);
+      const labelFact = document.createElement('div');
+      labelFact.className = 'icon-label';
+      labelFact.textContent = 'History Fact';
+      iconBoxFact.appendChild(labelFact);
+
+      const descFact = document.createElement('div');
+      descFact.className = 'page-desc collapsed';
+      descFact.classList.add('no-bg');
+      descFact.innerHTML = `
+        <div class="desc-main">“Historians right now are in somewhat of a culture war in that it is our patriotic duty as American citizens and as patriots to help make sure that the American public has access to our history in all of its complexity. And the truth is that you can't understand the victories and the triumphs without understanding how far Americans had to push. And I think that's especially true of blackface. When we didn't adequately understand how long blackface was a mainstay in American culture. Because many historians believe that it had died out by 1900, when in fact it only accelerated and increased up through the 1970s. And so if you just say, "Oh, it just died out. It was no longer in fashion," then what you're losing is the incredible, dangerous, and brave work of thousands of Black and white mothers across the United States in the 1950s and the 1960s, of students who stood up during Jim Crow America and said, "This is not OK. We are humans. We deserve dignity. And we want you to understand our history." …”</div>
+        <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
+      `;
+
+      function toggleDescFact(){
+        const expanded = btnFact.getAttribute('aria-expanded') === 'true';
+        btnFact.setAttribute('aria-expanded', String(!expanded));
+        descFact.classList.toggle('collapsed');
+        if(descFact.classList.contains('collapsed')){ descFact.style.display = 'none'; } else { descFact.style.display = ''; }
+        try{ resetIdleTimer(); }catch(_){ }
+      }
+      btnFact.addEventListener('click', toggleDescFact);
+      btnFact.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDescFact(); });
+      btnFact.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDescFact(); } });
+
+      toggleWrapFact.appendChild(iconBoxFact);
+      toggleWrapFact.appendChild(descFact);
+      // ensure it uses the lowered positioning so it aligns with page 6 area
+      toggleWrapFact.classList.add('lowered-toggle');
+      wrapper.appendChild(toggleWrapFact);
+    }
 
   // no per-page descriptions for now — always show hint/footer
   if(hint) hint.classList.remove('hidden');
