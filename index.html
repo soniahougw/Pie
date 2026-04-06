@@ -11,11 +11,12 @@
     <!-- Intro overlay — shows on first load, tap to start -->
     <div id="introOverlay" class="intro-overlay" role="dialog" aria-modal="true" aria-label="Intro">
       <div class="intro-inner">
-        <svg class="intro-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M1 21h22L12 2 1 21zm13-3h-4v-2h4v2zm0-4h-4v-4h4v4z"/>
-        </svg>
-        <h2 class="intro-title">CAUTION</h2>
-        <p class="intro-sub">TAP TO START</p>
+  <h2 class="intro-title">CONTENT WARNING</h2>
+  <p class="intro-sub">This collection contains racist imageries pervasive in</p>
+  <p class="intro-sub">nineteenth and twentieth-century children’s literature and</p>
+  <p class="intro-sub">educational materials. These imagieries imprinted white</p>
+  <p class="intro-sub">supremacy in the minds of children.</p>
+  <p class="intro-action">TAP TO START</p>
       </div>
     </div>
     <!-- Idle confirmation overlay (appears after inactivity) -->
@@ -28,11 +29,6 @@
     </div>
     <header class="topbar">
       <h1 class="title">A is for Apple Pie</h1>
-      <button id="bookmarkBtn" class="bookmark-btn" aria-label="Toggle description" title="Toggle description">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M6 2h8a2 2 0 0 1 2 2v18l-6-3-6 3V4a2 2 0 0 1 2-2z" />
-        </svg>
-      </button>
       <div class="controls">
         <button id="prevBtn" aria-label="Previous page">◀</button>
         <span id="pageIndicator">0 / 0</span>
@@ -52,7 +48,6 @@
     </section>
 
     <div id="book" class="book" role="application" aria-label="Book viewer">
-      <!-- Pages inserted by app.js (flipbook fallback) -->
     </div>
 
     <!-- Lightbox for gallery preview -->
@@ -60,7 +55,6 @@
       <img id="lbImg" src="" alt="" />
     </div>
 
-    <footer class="hint">Swipe left/right or tap arrows to flip pages — optimized for iPad (landscape preferred)</footer>
   </main>
 
   <script src="app.js"></script>
