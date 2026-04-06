@@ -1,4 +1,6 @@
 @import url("https://use.typekit.net/atb4mfs.css");
+/* Import Unbounded (Medium 500) for the CONTENT WARNING title */
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500&display=swap');
 /* Basic reset */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body,#book{height:100%}
@@ -24,11 +26,6 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 .thumb{background:transparent;border:0;padding:0;border-radius:6px;overflow:hidden;display:block;cursor:pointer}
 .thumb img{width:100%;height:160px;object-fit:cover;display:block;border-radius:0;box-shadow:none;background:transparent}
 
-/* lightbox */
-.lightbox{position:fixed;inset:0;background:transparent;display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}
-.lightbox img{max-width:95%;max-height:95%;box-shadow:0 10px 40px rgba(0,0,0,.8)}
-.lb-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.06);border:0;color:#000000;padding:8px 12px;border-radius:8px;font-size:18px}
-
 /* small status message inside collection (instructions, errors) */
 .collection-status{color:#000000;font-size:14px;margin-bottom:12px;opacity:0.95}
 
@@ -38,7 +35,7 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 /* Intro overlay */
 .intro-overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.45));display:flex;align-items:center;justify-content:center;z-index:1200}
 .intro-inner{
-  background: rgba(255,255,255,0.96);
+  background: #F3E9CD;
   /* Keep a 19:6 (width:height) ratio while remaining responsive */
   width: min(92vw, 920px);
   aspect-ratio: 19 / 6;
@@ -59,15 +56,18 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 .intro-title{
   font-size: clamp(28px, 5.2vw, 56px);
   margin: 0 0 8px 0;
-  color: #000;
+  color: #274737;
   letter-spacing: 3px;
-  font-weight: 900;
+    /* Use Unbounded Medium for the CONTENT WARNING title */
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 500;
+    font-style: normal;
   text-transform:uppercase;
 }
 .intro-sub{
   font-size:14px;
   margin:0 auto;
-  color:#666;
+  color:#274737;
   /* left-align text but keep the paragraph block centered within the intro box */
   text-align:left;
   width:min(86%,760px);
@@ -76,16 +76,16 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 .intro-sub{
   font-size: clamp(13px, 1.2vw, 16px);
   margin: 0 auto;
-  color: #222;
+  color: #274737;
   text-align: center; /* center the multi-line paragraph */
   width: min(72%, 720px);
   line-height: 1.4;
 }
-.intro-action{font-size:18px;margin:10px 0 0 0;color:#777;font-weight:700;letter-spacing:1px}
+.intro-action{font-size:18px;margin:10px 0 0 0;color:#274737;font-weight:700;letter-spacing:1px}
 .intro-action{
   font-size: clamp(18px, 2.6vw, 28px);
   margin: 12px 0 0 0;
-  color: #777;
+  color: #274737;
   font-weight: 700;
   letter-spacing: 2px;
 }
@@ -119,18 +119,18 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 
 /* metadata/frame for special pages (e.g., second page) */
 .meta-frame{width:100%;max-width:900px;padding:10px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.9);color:#111;margin-top:8px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-.meta-frame .meta-line{font-size:13px;line-height:1.4;color:#222}
+.meta-frame .meta-line{font-size:13px;line-height:1.4;color:#274737}
 
 /* description area under certain pages */
 .desc-container{width:100%;max-width:900px;margin-top:12px}
-.desc-input{width:100%;min-height:90px;padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.12);font-size:14px;color:#000;background:transparent;resize:vertical}
-.desc-input::placeholder{color:rgba(0,0,0,0.5)}
+.desc-input{width:100%;min-height:90px;padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.12);font-size:14px;color:#274737;background:transparent;resize:vertical}
+.desc-input::placeholder{color:rgba(39,71,55,0.6)}
 
 /* static page description for specific pages */
-.page-desc{width:100%;max-width:900px;margin-top:12px;padding:12px 14px;border-radius:6px;background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.06);color:#111;font-size:14px;line-height:1.5}
+.page-desc{width:100%;max-width:900px;margin-top:12px;padding:12px 14px;border-radius:6px;background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.06);color:#274737;font-size:14px;line-height:1.5}
 
 /* remove visible frame/background for specific pages when desired */
-.page-desc.no-bg{background:transparent;border:none;box-shadow:none;padding:8px 0;color:#000}
+.page-desc.no-bg{background:transparent;border:none;box-shadow:none;padding:8px 0;color:#274737}
 
 /* when a page has a bottom-anchored description, push image up so the text sits on the lower (light) background */
 .single-inner.has-bottom-desc{justify-content:flex-end}
@@ -165,6 +165,9 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 /* ensure toggle sits above the main image if layering causes issues */
 .page-toggle{z-index:1300}
 
+/* stacked variant: button above description (used on page 9) */
+.page-toggle.stacked{flex-direction:column;align-items:flex-start}
+
 /* (previously had a stacked variant for page 8; page 8 now uses the default inline layout) */
 
 /* lowered-toggle: position the page-toggle (icon + description) below the main image
@@ -172,24 +175,95 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
    page 7 and 8. */
 .page-toggle.lowered-toggle{
   position:fixed;
-  top:70vh; /* lower than 68% as requested */
+  /* align with page 6's fixed description (top:66vh) so toggles share the same vertical placement */
+  top:66vh;
   left:50%;
   transform:translateX(-50%);
   z-index:1400; /* above images and many overlays */
   width:auto;
+  align-items:flex-start; /* align icon + description at top */
 }
+
+/* Make page 10 (index 9) toggles default to the lowered position without
+   requiring JS to add the class. This lets a future-added .page-toggle on page
+   10 automatically appear at the same position as pages 7-9. */
+.single-inner[data-page="10"] .page-toggle{
+  position:fixed;
+  top:66vh;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:1400;
+  align-items:flex-start;
+}
+.single-inner[data-page="10"] .page-toggle .page-desc{
+  max-height: calc(100vh - 66vh - 4vh);
+  overflow: auto;
+}
+@media (max-width:600px){
+  .single-inner[data-page="10"] .page-toggle{ top:70vh; }
+}
+
+/* If JS produced a stacked layout for page 10 (e.g. class="page-toggle stacked"),
+   force it to behave like the inline/lowered layout used on page 9: place the
+   icon to the left and the description to the right, aligned at the top. This
+   makes page 10 match page 9's visual placement and scrolling height. */
+.single-inner[data-page="10"] .page-toggle.stacked{
+  flex-direction:row;
+  align-items:flex-start;
+}
+.single-inner[data-page="10"] .page-toggle.stacked .icon-box{
+  /* keep the icon box column layout but position it left of the desc */
+  margin-right:12px;
+}
+
+/* Match page 10 (index 9) layout to page 11: when a stacked toggle appears
+   on page 10, render it as a left-icon / right-description row aligned at the
+   top and constrained to the lowered position (same as other lowered toggles). */
+.single-inner[data-page="9"] .page-toggle{
+  position:fixed;
+  top:66vh;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:1400;
+  align-items:flex-start;
+}
+.single-inner[data-page="9"] .page-toggle.stacked{
+  flex-direction:row;
+  align-items:flex-start;
+}
+.single-inner[data-page="9"] .page-toggle.stacked .icon-box{
+  margin-right:12px;
+}
+.single-inner[data-page="9"] .page-toggle.stacked .page-desc{
+  max-height: calc(100vh - 66vh - 4vh);
+  overflow: auto;
+}
+@media (max-width:600px){
+  .single-inner[data-page="9"] .page-toggle{ top:70vh; }
+}
+
+/* icon box holds the icon button and a small label beneath it */
+.icon-box{display:flex;flex-direction:column;align-items:center;gap:6px}
+.icon-label{font-size:13px;color:#274737;text-align:center;font-weight:700}
 
 /* small-screen tweak: nudge further down to avoid overlapping the image on narrow viewports */
 @media (max-width:600px){
-  .page-toggle.lowered-toggle{ top:75vh; }
+  .page-toggle.lowered-toggle{ top:70vh; }
+}
+
+/* ensure descriptions shown from lowered toggles don't overflow the viewport; give them the same
+   available height as fixed-at-66 descriptions (leave 4vh breathing room) */
+.page-toggle.lowered-toggle .page-desc{
+  max-height: calc(100vh - 66vh - 4vh);
+  overflow: auto;
 }
 
 /* right-align helper for page descriptions */
 .page-desc.align-right{text-align:right}
 
 /* split alignment inside a page-desc: main paragraph left, citation on right */
-.page-desc .desc-main{text-align:left}
-.page-desc .desc-cite{text-align:right;display:block;margin-top:8px;color:#444;font-size:13px}
+.page-desc .desc-main{text-align:left;color:#274737}
+.page-desc .desc-cite{text-align:right;display:block;margin-top:8px;color:#274737;font-size:13px}
 
 /* simple page flip states */
 .page.prev{z-index:1;transform-origin:left center}
