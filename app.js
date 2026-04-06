@@ -200,21 +200,41 @@ function renderSingle(){
   } else {
     wrapper.classList.remove('has-bottom-desc');
   }
-  const img = document.createElement('img');
-  img.src = IMAGE_FOLDER + images[current];
-  img.alt = `${COLLECTION_NAME} — page ${current + 1}`;
-  // For page 2 (index 1) show a slightly smaller image so the description below fits
-  if(current === 1){
-    img.style.maxHeight = '62vh';
-    img.style.width = 'auto';
-    img.style.objectFit = 'contain';
+  // Special layout for page 3 (index 2): show two images side-by-side
+  if(current === 2){
+    const split = document.createElement('div');
+    split.className = 'split-images';
+
+    const left = document.createElement('img');
+    left.src = IMAGE_FOLDER + 'beforeA.png';
+    left.alt = `${COLLECTION_NAME} — page ${current + 1} (left)`;
+    left.className = 'split-img left';
+
+    const right = document.createElement('img');
+    right.src = IMAGE_FOLDER + 'A.png';
+    right.alt = `${COLLECTION_NAME} — page ${current + 1} (right)`;
+    right.className = 'split-img right';
+
+    split.appendChild(left);
+    split.appendChild(right);
+    wrapper.appendChild(split);
   } else {
-    // reset any inline styles for other pages
-    img.style.maxHeight = '';
-    img.style.width = '';
-    img.style.objectFit = '';
+    const img = document.createElement('img');
+    img.src = IMAGE_FOLDER + images[current];
+    img.alt = `${COLLECTION_NAME} — page ${current + 1}`;
+    // For page 2 (index 1) show a slightly smaller image so the description below fits
+    if(current === 1){
+      img.style.maxHeight = '62vh';
+      img.style.width = 'auto';
+      img.style.objectFit = 'contain';
+    } else {
+      // reset any inline styles for other pages
+      img.style.maxHeight = '';
+      img.style.width = '';
+      img.style.objectFit = '';
+    }
+    wrapper.appendChild(img);
   }
-  wrapper.appendChild(img);
 
   const caption = document.createElement('div');
   caption.className = 'caption';
