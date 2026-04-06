@@ -114,6 +114,18 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 .single-viewer .single-controls button{background:rgba(255,255,255,0.06);border:0;padding:8px 12px;border-radius:8px;color:#000000}
 .single-viewer .caption{color:#000000;font-size:14px}
 
+/* Two-up layout for page 3: place two images side-by-side on wide viewports,
+   stack them vertically on narrow screens. Images scale to fit with contain. */
+.two-up{display:flex;gap:0;width:100%;max-width:1200px;align-items:stretch;justify-content:center}
+.two-up .two-up-img{width:50%;max-width:50%;object-fit:contain;display:block;background:transparent;margin:0;padding:0;border-radius:0}
+/* Remove any gaps caused by default image rendering or whitespace; ensure images meet at the seam */
+.two-up .two-up-img.left{border-top-right-radius:0;border-bottom-right-radius:0}
+.two-up .two-up-img.right{border-top-left-radius:0;border-bottom-left-radius:0}
+@media (max-width:720px){
+  .two-up{flex-direction:column;gap:0}
+  .two-up .two-up-img{width:100%;max-width:100%;margin:0}
+}
+
 /* hide the small per-image numeric footer (e.g. "1 / 16") shown under images */
 .single-viewer .caption{display:none !important;height:0;margin:0;padding:0}
 
@@ -290,22 +302,3 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 @media (orientation:portrait){
   .book-inner{max-width:720px;max-height:100%}
 }
-
-/* Two-up (side-by-side) layout for certain pages (used on page 3)
-   left/right images that scale responsively and maintain aspect ratio. */
-.split-images{
-  display:flex;
-  gap:12px;
-  width:100%;
-  max-width:1200px;
-  align-items:center;
-  justify-content:space-between;
-}
-.split-images .split-img{
-  width:49%;
-  max-height:80vh;
-  object-fit:contain;
-  display:block;
-}
-.split-images .split-img.left{align-self:flex-start}
-.split-images .split-img.right{align-self:flex-start}
