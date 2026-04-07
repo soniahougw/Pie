@@ -226,18 +226,18 @@ function renderSingle(){
 
   // Add a static descriptive block under the image for the second page (index 1)
   if(current === 1){
-    // We want to split description into two columns with up to 7 words per line.
-    const text = `The front cover is adorned with a faded cloth image of an apple pie, the back cover features a cloth image of a Black child, and the inner pages tell the story of a Black child interacting with an apple pie: for example, "B - Bit it," and "C - Cut it." Most of the book's cover and pages are made of linen and cotton. The spine is made of velvet, and the back cover uses a bit of handmade lace. Most of the cloth is made with a plain weave, but the cover material uses a satin weave.`;
+  // We want to split description into two columns with up to 10 words per line.
+  const text = `The front cover is adorned with a faded cloth image of an apple pie, the back cover features a cloth image of a Black child, and the inner pages tell the story of a Black child interacting with an apple pie: for example, "B - Bit it," and "C - Cut it." Most of the book's cover and pages are made of linen and cotton. The spine is made of velvet, and the back cover uses a bit of handmade lace. Most of the cloth is made with a plain weave, but the cover material uses a satin weave.`;
 
     const desc = document.createElement('div');
     desc.className = 'page-desc split-columns';
     desc.classList.add('no-bg');
 
-    // split into words, group into lines of up to 7 words
+    // split into words, group into lines of up to 10 words
     const words = text.split(/\s+/).filter(Boolean);
     const lines = [];
-    for(let i = 0; i < words.length; i += 7){
-      lines.push(words.slice(i, i + 7).join(' '));
+    for(let i = 0; i < words.length; i += 10){
+      lines.push(words.slice(i, i + 10).join(' '));
     }
 
     // divide lines into two roughly equal halves for left and right columns
