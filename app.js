@@ -376,7 +376,7 @@ function renderSingle(){
 
   // Add a static descriptive block under the image for the sixth page (index 5)
   if(current === 5){
-    const text6 = `The typical minstrel performer would don blackface, darkened to the extreme, with red paint around the lips — these characteristics are present in the apple pie book. Based on this minstrel history and the type of imagery in the apple pie book, we can fairly confidently narrow the timeframe in which the book was made to about 1880-1920 (post Civil War and pre WWII), when popular culture was most heavily saturated with this type of imagery.`;
+  const text6 = `The typical minstrel performer would don blackface, darkened to the extreme, with red paint around the lips — these characteristics are present in the apple pie book. Based on this minstrel history and the type of imagery in the apple pie book, we can fairly confidently narrow the timeframe in which the book was made to about 1880-1920 (post Civil War and pre WWII), when popular culture was most heavily saturated with this type of imagery.`;
     const desc6 = document.createElement('div');
     desc6.className = 'page-desc';
     desc6.classList.add('no-bg');
