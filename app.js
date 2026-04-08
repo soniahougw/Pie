@@ -246,7 +246,13 @@ function renderSingle(){
     // If the description generates 5 lines or fewer, keep it as a single block.
     // Otherwise split into two roughly equal halves for left and right columns.
     if(lines.length <= 5){
-      desc.innerText = text;
+      // Render as explicit lines (one <p> per logical line) so the 10-words
+      // grouping is visible even when we don't split into two columns.
+      lines.forEach(line => {
+        const p = document.createElement('p');
+        p.textContent = line;
+        desc.appendChild(p);
+      });
     } else {
       const half = Math.ceil(lines.length / 2);
       const leftLines = lines.slice(0, half);
@@ -289,8 +295,8 @@ function renderSingle(){
     }
 
     if(lines3.length <= 5){
-      // short text: render as single block
-      desc3.innerText = text3;
+      // render explicit logical lines so grouping is visible
+      lines3.forEach(line => { const p = document.createElement('p'); p.textContent = line; desc3.appendChild(p); });
     } else {
       // split into two columns
       desc3.classList.add('split-columns');
@@ -321,7 +327,7 @@ function renderSingle(){
       lines4.push(words4.slice(i, i + WORDS_PER_LINE).join(' '));
     }
     if(lines4.length <= 5){
-      desc4.innerText = text4;
+      lines4.forEach(line => { const p = document.createElement('p'); p.textContent = line; desc4.appendChild(p); });
     } else {
       desc4.classList.add('split-columns');
       const half4 = Math.ceil(lines4.length / 2);
@@ -351,7 +357,7 @@ function renderSingle(){
       lines5.push(words5.slice(i, i + WORDS_PER_LINE).join(' '));
     }
     if(lines5.length <= 5){
-      desc5.innerText = text5;
+      lines5.forEach(line => { const p = document.createElement('p'); p.textContent = line; desc5.appendChild(p); });
     } else {
       desc5.classList.add('split-columns');
       const half5 = Math.ceil(lines5.length / 2);
@@ -381,7 +387,7 @@ function renderSingle(){
       lines6.push(words6.slice(i, i + WORDS_PER_LINE).join(' '));
     }
     if(lines6.length <= 5){
-      desc6.innerText = text6;
+      lines6.forEach(line => { const p = document.createElement('p'); p.textContent = line; desc6.appendChild(p); });
     } else {
       desc6.classList.add('split-columns');
       const half6 = Math.ceil(lines6.length / 2);
