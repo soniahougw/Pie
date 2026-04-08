@@ -240,68 +240,157 @@ function renderSingle(){
       lines.push(words.slice(i, i + 10).join(' '));
     }
 
-    // divide lines into two roughly equal halves for left and right columns
-    const half = Math.ceil(lines.length / 2);
-    const leftLines = lines.slice(0, half);
-    const rightLines = lines.slice(half);
+    // If the description generates 5 lines or fewer, keep it as a single block.
+    // Otherwise split into two roughly equal halves for left and right columns.
+    if(lines.length <= 5){
+      desc.innerText = text;
+    } else {
+      const half = Math.ceil(lines.length / 2);
+      const leftLines = lines.slice(0, half);
+      const rightLines = lines.slice(half);
 
-    const left = document.createElement('div');
-    left.className = 'desc-left';
-    leftLines.forEach(line => {
-      const p = document.createElement('p');
-      p.textContent = line;
-      left.appendChild(p);
-    });
+      const left = document.createElement('div');
+      left.className = 'desc-left';
+      leftLines.forEach(line => {
+        const p = document.createElement('p');
+        p.textContent = line;
+        left.appendChild(p);
+      });
 
-    const right = document.createElement('div');
-    right.className = 'desc-right';
-    rightLines.forEach(line => {
-      const p = document.createElement('p');
-      p.textContent = line;
-      right.appendChild(p);
-    });
+      const right = document.createElement('div');
+      right.className = 'desc-right';
+      rightLines.forEach(line => {
+        const p = document.createElement('p');
+        p.textContent = line;
+        right.appendChild(p);
+      });
 
-    desc.appendChild(left);
-    desc.appendChild(right);
+      desc.appendChild(left);
+      desc.appendChild(right);
+    }
     wrapper.appendChild(desc);
   }
 
   // Add a static descriptive block under the image for the third page (index 2)
   if(current === 2){
+    const text3 = `The book is hand-stitched. Much of the stitching is neat and uniform, but certain areas (the inside of the covers) use larger, messier stitches (handmade).`;
     const desc3 = document.createElement('div');
     desc3.className = 'page-desc';
     desc3.classList.add('no-bg');
-    desc3.innerText = `The book is hand-stitched. Much of the stitching is neat and uniform, but certain areas (the inside of the covers) use larger, messier stitches (handmade).`;
-  if(current >= 2 && current <= 15 && current !== 6) desc3.classList.add('fixed-at-66');
+
+    // split into words, group into lines of up to 10 words
+    const words3 = text3.split(/\s+/).filter(Boolean);
+    const lines3 = [];
+    for(let i = 0; i < words3.length; i += 10){
+      lines3.push(words3.slice(i, i + 10).join(' '));
+    }
+
+    if(lines3.length <= 5){
+      // short text: render as single block
+      desc3.innerText = text3;
+    } else {
+      // split into two columns
+      desc3.classList.add('split-columns');
+      const half3 = Math.ceil(lines3.length / 2);
+      const leftLines3 = lines3.slice(0, half3);
+      const rightLines3 = lines3.slice(half3);
+      const left3 = document.createElement('div'); left3.className = 'desc-left';
+      leftLines3.forEach(line => { const p = document.createElement('p'); p.textContent = line; left3.appendChild(p); });
+      const right3 = document.createElement('div'); right3.className = 'desc-right';
+      rightLines3.forEach(line => { const p = document.createElement('p'); p.textContent = line; right3.appendChild(p); });
+      desc3.appendChild(left3);
+      desc3.appendChild(right3);
+    }
+    if(current >= 2 && current <= 15 && current !== 6) desc3.classList.add('fixed-at-66');
     wrapper.appendChild(desc3);
   }
 
   // Add a static descriptive block under the image for the fourth page (index 3)
   if(current === 3){
+    const text4 = `The A was an Apple Pie alphabet rhyme that can be traced back to 17th century England, but remained popular into the 20th century.`;
     const desc4 = document.createElement('div');
     desc4.className = 'page-desc';
     desc4.classList.add('no-bg');
-    desc4.innerText = `The A was an Apple Pie alphabet rhyme that can be traced back to 17th century England, but remained popular into the 20th century.`;
+
+    const words4 = text4.split(/\s+/).filter(Boolean);
+    const lines4 = [];
+    for(let i = 0; i < words4.length; i += 10){
+      lines4.push(words4.slice(i, i + 10).join(' '));
+    }
+    if(lines4.length <= 5){
+      desc4.innerText = text4;
+    } else {
+      desc4.classList.add('split-columns');
+      const half4 = Math.ceil(lines4.length / 2);
+      const leftLines4 = lines4.slice(0, half4);
+      const rightLines4 = lines4.slice(half4);
+      const left4 = document.createElement('div'); left4.className = 'desc-left';
+      leftLines4.forEach(line => { const p = document.createElement('p'); p.textContent = line; left4.appendChild(p); });
+      const right4 = document.createElement('div'); right4.className = 'desc-right';
+      rightLines4.forEach(line => { const p = document.createElement('p'); p.textContent = line; right4.appendChild(p); });
+      desc4.appendChild(left4);
+      desc4.appendChild(right4);
+    }
     if(current >= 2 && current <= 15 && current !== 6) desc4.classList.add('fixed-at-66');
     wrapper.appendChild(desc4);
   }
 
   // Add a static descriptive block under the image for the fifth page (index 4)
   if(current === 4){
+    const text5 = `Some of the usual narrative has been changed in this apple pie booklet. Instead of "Dealt it" and "Eat it" this book says "Danced for it" and "Exclaimed at it." These adjustments could serve to further the racial stereotypes the book depicts — dancing, especially, is a minstrel trope.`;
     const desc5 = document.createElement('div');
     desc5.className = 'page-desc';
     desc5.classList.add('no-bg');
-    desc5.innerText = `Some of the usual narrative has been changed in this apple pie booklet. Instead of "Dealt it" and "Eat it" this book says "Danced for it" and "Exclaimed at it." These adjustments could serve to further the racial stereotypes the book depicts — dancing, especially, is a minstrel trope.`;
+
+    const words5 = text5.split(/\s+/).filter(Boolean);
+    const lines5 = [];
+    for(let i = 0; i < words5.length; i += 10){
+      lines5.push(words5.slice(i, i + 10).join(' '));
+    }
+    if(lines5.length <= 5){
+      desc5.innerText = text5;
+    } else {
+      desc5.classList.add('split-columns');
+      const half5 = Math.ceil(lines5.length / 2);
+      const leftLines5 = lines5.slice(0, half5);
+      const rightLines5 = lines5.slice(half5);
+      const left5 = document.createElement('div'); left5.className = 'desc-left';
+      leftLines5.forEach(line => { const p = document.createElement('p'); p.textContent = line; left5.appendChild(p); });
+      const right5 = document.createElement('div'); right5.className = 'desc-right';
+      rightLines5.forEach(line => { const p = document.createElement('p'); p.textContent = line; right5.appendChild(p); });
+      desc5.appendChild(left5);
+      desc5.appendChild(right5);
+    }
   if(current >= 2 && current <= 15 && current !== 6) desc5.classList.add('fixed-at-66');
     wrapper.appendChild(desc5);
   }
 
   // Add a static descriptive block under the image for the sixth page (index 5)
   if(current === 5){
+    const text6 = `The typical minstrel performer would don blackface, darkened to the extreme, with red paint around the lips — these characteristics are present in the apple pie book. Based on this minstrel history and the type of imagery in the apple pie book, we can fairly confidently narrow the timeframe in which the book was made to about 1880-1920 (post Civil War and pre WWII), when popular culture was most heavily saturated with this type of imagery.`;
     const desc6 = document.createElement('div');
     desc6.className = 'page-desc';
     desc6.classList.add('no-bg');
-    desc6.innerText = `The typical minstrel performer would don blackface, darkened to the extreme, with red paint around the lips — these characteristics are present in the apple pie book. Based on this minstrel history and the type of imagery in the apple pie book, we can fairly confidently narrow the timeframe in which the book was made to about 1880-1920 (post Civil War and pre WWII), when popular culture was most heavily saturated with this type of imagery.`;
+
+    const words6 = text6.split(/\s+/).filter(Boolean);
+    const lines6 = [];
+    for(let i = 0; i < words6.length; i += 10){
+      lines6.push(words6.slice(i, i + 10).join(' '));
+    }
+    if(lines6.length <= 5){
+      desc6.innerText = text6;
+    } else {
+      desc6.classList.add('split-columns');
+      const half6 = Math.ceil(lines6.length / 2);
+      const leftLines6 = lines6.slice(0, half6);
+      const rightLines6 = lines6.slice(half6);
+      const left6 = document.createElement('div'); left6.className = 'desc-left';
+      leftLines6.forEach(line => { const p = document.createElement('p'); p.textContent = line; left6.appendChild(p); });
+      const right6 = document.createElement('div'); right6.className = 'desc-right';
+      rightLines6.forEach(line => { const p = document.createElement('p'); p.textContent = line; right6.appendChild(p); });
+      desc6.appendChild(left6);
+      desc6.appendChild(right6);
+    }
   if(current >= 2 && current <= 15 && current !== 6) desc6.classList.add('fixed-at-66');
     wrapper.appendChild(desc6);
   }
