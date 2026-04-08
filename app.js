@@ -2,6 +2,9 @@
 const COLLECTION_NAME = 'A is for Apple Pie';
 const IMAGE_FOLDER = 'assets/images/a-is-for-apple-pie/';
 
+// UI configuration: number of words to group per logical line when wrapping descriptions
+const WORDS_PER_LINE = 10;
+
 // flipbook variables (fallback)
 let images = [];
 const book = document.getElementById('book');
@@ -233,11 +236,11 @@ function renderSingle(){
     desc.className = 'page-desc split-columns';
     desc.classList.add('no-bg');
 
-    // split into words, group into lines of up to 10 words
+    // split into words, group into lines of up to WORDS_PER_LINE words
     const words = text.split(/\s+/).filter(Boolean);
     const lines = [];
-    for(let i = 0; i < words.length; i += 10){
-      lines.push(words.slice(i, i + 10).join(' '));
+    for(let i = 0; i < words.length; i += WORDS_PER_LINE){
+      lines.push(words.slice(i, i + WORDS_PER_LINE).join(' '));
     }
 
     // If the description generates 5 lines or fewer, keep it as a single block.
@@ -278,11 +281,11 @@ function renderSingle(){
     desc3.className = 'page-desc';
     desc3.classList.add('no-bg');
 
-    // split into words, group into lines of up to 10 words
+    // split into words, group into lines of up to WORDS_PER_LINE words
     const words3 = text3.split(/\s+/).filter(Boolean);
     const lines3 = [];
-    for(let i = 0; i < words3.length; i += 10){
-      lines3.push(words3.slice(i, i + 10).join(' '));
+    for(let i = 0; i < words3.length; i += WORDS_PER_LINE){
+      lines3.push(words3.slice(i, i + WORDS_PER_LINE).join(' '));
     }
 
     if(lines3.length <= 5){
@@ -314,8 +317,8 @@ function renderSingle(){
 
     const words4 = text4.split(/\s+/).filter(Boolean);
     const lines4 = [];
-    for(let i = 0; i < words4.length; i += 10){
-      lines4.push(words4.slice(i, i + 10).join(' '));
+    for(let i = 0; i < words4.length; i += WORDS_PER_LINE){
+      lines4.push(words4.slice(i, i + WORDS_PER_LINE).join(' '));
     }
     if(lines4.length <= 5){
       desc4.innerText = text4;
@@ -344,8 +347,8 @@ function renderSingle(){
 
     const words5 = text5.split(/\s+/).filter(Boolean);
     const lines5 = [];
-    for(let i = 0; i < words5.length; i += 10){
-      lines5.push(words5.slice(i, i + 10).join(' '));
+    for(let i = 0; i < words5.length; i += WORDS_PER_LINE){
+      lines5.push(words5.slice(i, i + WORDS_PER_LINE).join(' '));
     }
     if(lines5.length <= 5){
       desc5.innerText = text5;
@@ -374,8 +377,8 @@ function renderSingle(){
 
     const words6 = text6.split(/\s+/).filter(Boolean);
     const lines6 = [];
-    for(let i = 0; i < words6.length; i += 10){
-      lines6.push(words6.slice(i, i + 10).join(' '));
+    for(let i = 0; i < words6.length; i += WORDS_PER_LINE){
+      lines6.push(words6.slice(i, i + WORDS_PER_LINE).join(' '));
     }
     if(lines6.length <= 5){
       desc6.innerText = text6;
