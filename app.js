@@ -518,58 +518,39 @@ function renderSingle(){
       wrapper.appendChild(toggleWrap9);
     }
 
-    // Add an icon-button which toggles a description on the eleventh page (index 10)
+    // Page 11 (index 10): show the PTA button and open hover-pta.png full-screen on tap
     if(current === 10){
       const toggleWrap10 = document.createElement('div');
-  // use the inline/default row layout so the description appears beside the button (match page 9)
-  toggleWrap10.className = 'page-toggle';
+      // use the inline/default row layout so the label appears beside the button
+      toggleWrap10.className = 'page-toggle';
 
       const btn10 = document.createElement('button');
       btn10.className = 'icon-button';
       btn10.type = 'button';
-      btn10.setAttribute('aria-expanded', 'false');
-      btn10.setAttribute('aria-label', 'Show PTA note');
+      btn10.setAttribute('aria-label', 'PTA image');
 
       const icon10 = document.createElement('img');
+      // use pta.png as the button icon
       icon10.src = IMAGE_FOLDER + 'pta.png';
       icon10.alt = 'PTA image';
       btn10.appendChild(icon10);
 
-    // create icon box + label for page 10
-    const iconBox10 = document.createElement('div');
-    iconBox10.className = 'icon-box';
-    iconBox10.appendChild(btn10);
-    const label10 = document.createElement('div');
-    label10.className = 'icon-label';
-    label10.textContent = 'History Fact';
-    iconBox10.appendChild(label10);
+      // create icon box + label for page 11
+      const iconBox10 = document.createElement('div');
+      iconBox10.className = 'icon-box';
+      iconBox10.appendChild(btn10);
+      const label10 = document.createElement('div');
+      label10.className = 'icon-label';
+      label10.textContent = 'PTA Movement';
+      iconBox10.appendChild(label10);
 
-    const desc10 = document.createElement('div');
-      desc10.className = 'page-desc collapsed';
-      desc10.classList.add('no-bg');
-      desc10.innerHTML = `
-        <div class="desc-main">Betty Reid, who had just integrated this neighborhood and her son integrated Park Mead Elementary, is horrified to discover that the first thing that her son is supposed to witness is a blackface show put on by the school principal and the PTA. And the show that they're doing is actually one of the shows that was recommended by the WPA, written and created by the WPA, called "Weep No More," which is from a Stephen Foster song. And so these Black mothers decide, through various means, that they need to organize to stop this because they understand - rightfully so - that the fight against lynching, against desegregation, voting rights, all comes down to an issue of dehumanization, and that that is what minstrelsy is. It is a mass dehumanization and caricature of Black life. And by 1970, most of these publishing houses were going under because of the incredible work of Black and white mothers who worked with them. There were a lot of Jewish American mothers who were concerned by this, but also people who were moved by the Civil Rights Movement, who said, I don't want my child performing this, and I don't want to perform this. This is not acceptable.</div>
-        <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
-      `;
+      // wire the button to open hover-pta.png in the full-viewport overlay
+      btn10.addEventListener('click', (e)=>{ e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-pta.png', 'PTA full image'); }catch(_){ } });
+      btn10.addEventListener('touchstart', (e)=>{ e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-pta.png', 'PTA full image'); }catch(_){ } });
+      btn10.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-pta.png', 'PTA full image'); }catch(_){ } } });
 
-      function toggleDesc10(){
-        const expanded = btn10.getAttribute('aria-expanded') === 'true';
-        btn10.setAttribute('aria-expanded', String(!expanded));
-        desc10.classList.toggle('collapsed');
-        if(desc10.classList.contains('collapsed')){
-          desc10.style.display = 'none';
-        } else {
-          desc10.style.display = '';
-        }
-        try{ resetIdleTimer(); }catch(_){ }
-      }
-      btn10.addEventListener('click', toggleDesc10);
-      btn10.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc10(); });
-      btn10.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc10(); } });
-
-    toggleWrap10.appendChild(iconBox10);
-    toggleWrap10.appendChild(desc10);
-      // lower the toggle for page 10 as well so icon sits at the same vertical placement as page 9
+      toggleWrap10.appendChild(iconBox10);
+      // lower the toggle so visual alignment matches nearby pages
       toggleWrap10.classList.add('lowered-toggle');
       wrapper.appendChild(toggleWrap10);
     }
