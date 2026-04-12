@@ -454,8 +454,7 @@ function renderSingle(){
     const btn8 = document.createElement('button');
     btn8.className = 'icon-button';
     btn8.type = 'button';
-    btn8.setAttribute('aria-expanded', 'false');
-    btn8.setAttribute('aria-label', 'Show banjo note');
+    btn8.setAttribute('aria-label', 'SF image');
 
     const icon8 = document.createElement('img');
     // use the provided file from the collection folder
@@ -471,90 +470,50 @@ function renderSingle(){
   label8.className = 'icon-label';
   label8.textContent = 'Stephen Foster';
   iconBox8.appendChild(label8);
-
-  const desc8 = document.createElement('div');
-    // the description is initially collapsed/hidden and will appear under the button
-    desc8.className = 'page-desc collapsed';
-    desc8.classList.add('no-bg');
-    desc8.innerHTML = `
-      <div class="desc-main">Ties to music (songs → dance → blackface shows); “What's interesting about those songs is they are romanticizing the relationship between an enslaved person and their enslaver. And so when we have commentary, even from the president now, who recently said slavery wasn't so bad, well, slavery was horrific, but if you were raised on a diet of Stephen Foster music, and going to minstrel shows, you can somewhat understand how somebody at the time could easily be led to believe that slavery was a grand old party because that's what it was supposed to be telling you. It's pro-slavery propaganda.”</div>
-      <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
-    `;
-
-    function toggleDesc8(){
-      const expanded = btn8.getAttribute('aria-expanded') === 'true';
-      btn8.setAttribute('aria-expanded', String(!expanded));
-      desc8.classList.toggle('collapsed');
-      if(desc8.classList.contains('collapsed')){
-        desc8.style.display = 'none';
-      } else {
-        desc8.style.display = '';
-      }
-      try{ resetIdleTimer(); }catch(_){ }
-    }
-    btn8.addEventListener('click', toggleDesc8);
-    btn8.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc8(); });
-    btn8.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc8(); } });
+  // wire the button to show the full-viewport hover image (match page 7 behavior)
+  btn8.addEventListener('click', (e) => { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-sf.png', 'SF full image'); }catch(_){ } });
+  btn8.addEventListener('touchstart', (e) => { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-sf.png', 'SF full image'); }catch(_){ } });
+  btn8.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-sf.png', 'SF full image'); }catch(_){ } } });
 
   toggleWrap8.appendChild(iconBox8);
-  toggleWrap8.appendChild(desc8);
-    // lower the toggle for page 8 as well so icon sits below ~68% of viewport
+    // lower the toggle for page 8 so icon sits below ~68% of viewport like nearby pages
     toggleWrap8.classList.add('lowered-toggle');
     wrapper.appendChild(toggleWrap8);
   }
 
-    // Add an icon-button which toggles a description below the image on the ninth page (index 8)
+    // Page 9 (index 8): show the icon and label only — open hover image fullscreen on tap
     if(current === 8){
       const toggleWrap9 = document.createElement('div');
-    // use the inline/default row layout so the description appears beside the button
-    toggleWrap9.className = 'page-toggle';
+      // use the inline/default row layout so the description appears beside the button
+      toggleWrap9.className = 'page-toggle';
 
       const btn9 = document.createElement('button');
       btn9.className = 'icon-button';
       btn9.type = 'button';
-      btn9.setAttribute('aria-expanded', 'false');
-      btn9.setAttribute('aria-label', 'Show show-1 note');
+      btn9.setAttribute('aria-label', 'MS image');
 
       const icon9 = document.createElement('img');
-      icon9.src = IMAGE_FOLDER + 'show 1.png';
-      icon9.alt = 'Show 1 image';
+      // use ms.png as the button icon
+      icon9.src = IMAGE_FOLDER + 'ms.png';
+      icon9.alt = 'MS image';
       btn9.appendChild(icon9);
 
-    // create icon box + label for page 9
-    const iconBox9 = document.createElement('div');
-    iconBox9.className = 'icon-box';
-    iconBox9.appendChild(btn9);
-    const label9 = document.createElement('div');
-    label9.className = 'icon-label';
-    label9.textContent = 'Minstrel Show';
-    iconBox9.appendChild(label9);
+      // create icon box + label for page 9
+      const iconBox9 = document.createElement('div');
+      iconBox9.className = 'icon-box';
+      iconBox9.appendChild(btn9);
+      const label9 = document.createElement('div');
+      label9.className = 'icon-label';
+      label9.textContent = 'Minstrel Show';
+      iconBox9.appendChild(label9);
 
-    const desc9 = document.createElement('div');
-      desc9.className = 'page-desc collapsed';
-      desc9.classList.add('no-bg');
-      desc9.innerHTML = `
-        <div class="desc-main">"Make America Great Again" or "This Is Our Country" or "Take Back Our Country" are all slogans and songs that were very common in minstrel shows. And so a lot of minstrel shows reinterpreted slavery in a fantastical way, that the Civil War ended and that in these minstrel shows there was Black rule and that everything America held dear was desecrated. And so this [blackface] "Zip" character … sometimes he's named "Rastus" — he has different names that he goes by — runs for office, political office, becomes president, and the first thing he does is he takes away America's guns. Sound familiar? And so a lot of these terms that you could perhaps say [are] dog whistles in white of supremacy are taken line for line from these minstrel shows.</div>
-        <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
-      `;
+      // wire the button to open hover-ms.png fullscreen (match pages 7/8 behavior)
+      btn9.addEventListener('click', (e) => { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-ms.png', 'MS full image'); }catch(_){ } });
+      btn9.addEventListener('touchstart', (e) => { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-ms.png', 'MS full image'); }catch(_){ } });
+      btn9.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-ms.png', 'MS full image'); }catch(_){ } } });
 
-      function toggleDesc9(){
-        const expanded = btn9.getAttribute('aria-expanded') === 'true';
-        btn9.setAttribute('aria-expanded', String(!expanded));
-        desc9.classList.toggle('collapsed');
-        if(desc9.classList.contains('collapsed')){
-          desc9.style.display = 'none';
-        } else {
-          desc9.style.display = '';
-        }
-        try{ resetIdleTimer(); }catch(_){ }
-      }
-      btn9.addEventListener('click', toggleDesc9);
-      btn9.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc9(); });
-      btn9.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc9(); } });
-
-    toggleWrap9.appendChild(iconBox9);
-    toggleWrap9.appendChild(desc9);
-      // lower the toggle for page 9 as well so icon sits below ~68% of viewport
+      toggleWrap9.appendChild(iconBox9);
+      // lower the toggle for page 9 so icon sits below ~68% of viewport like nearby pages
       toggleWrap9.classList.add('lowered-toggle');
       wrapper.appendChild(toggleWrap9);
     }
@@ -615,21 +574,21 @@ function renderSingle(){
       wrapper.appendChild(toggleWrap10);
     }
 
-    // Add an icon-button which toggles a description on the tenth page (index 9)
+    // Page 10 (index 9): show an icon/button and open hover-hf.png full-screen on tap
     if(current === 9){
       const toggleWrapFact = document.createElement('div');
-      // stacked layout: button above description so the description appears below when opened
+      // stacked layout: button above label
       toggleWrapFact.className = 'page-toggle stacked';
 
       const btnFact = document.createElement('button');
       btnFact.className = 'icon-button';
       btnFact.type = 'button';
-      btnFact.setAttribute('aria-expanded', 'false');
-      btnFact.setAttribute('aria-label', 'Show history fact');
+      btnFact.setAttribute('aria-label', 'HF image');
 
       const iconFact = document.createElement('img');
-      iconFact.src = IMAGE_FOLDER + 'fact 1.png';
-      iconFact.alt = 'Fact 1 image';
+      // use hf.png as the button icon
+      iconFact.src = IMAGE_FOLDER + 'hf.png';
+      iconFact.alt = 'HF image';
       btnFact.appendChild(iconFact);
 
       // icon box + label
@@ -641,28 +600,13 @@ function renderSingle(){
       labelFact.textContent = 'History Fact';
       iconBoxFact.appendChild(labelFact);
 
-      const descFact = document.createElement('div');
-      descFact.className = 'page-desc collapsed';
-      descFact.classList.add('no-bg');
-      descFact.innerHTML = `
-        <div class="desc-main">“Historians right now are in somewhat of a culture war in that it is our patriotic duty as American citizens and as patriots to help make sure that the American public has access to our history in all of its complexity. And the truth is that you can't understand the victories and the triumphs without understanding how far Americans had to push. And I think that's especially true of blackface. When we didn't adequately understand how long blackface was a mainstay in American culture. Because many historians believe that it had died out by 1900, when in fact it only accelerated and increased up through the 1970s. And so if you just say, "Oh, it just died out. It was no longer in fashion," then what you're losing is the incredible, dangerous, and brave work of thousands of Black and white mothers across the United States in the 1950s and the 1960s, of students who stood up during Jim Crow America and said, "This is not OK. We are humans. We deserve dignity. And we want you to understand our history." …”</div>
-        <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
-      `;
-
-      function toggleDescFact(){
-        const expanded = btnFact.getAttribute('aria-expanded') === 'true';
-        btnFact.setAttribute('aria-expanded', String(!expanded));
-        descFact.classList.toggle('collapsed');
-        if(descFact.classList.contains('collapsed')){ descFact.style.display = 'none'; } else { descFact.style.display = ''; }
-        try{ resetIdleTimer(); }catch(_){ }
-      }
-      btnFact.addEventListener('click', toggleDescFact);
-      btnFact.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDescFact(); });
-      btnFact.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDescFact(); } });
+      // wire the button to open hover-hf.png in the full-viewport overlay
+      btnFact.addEventListener('click', (e)=>{ e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-hf.png', 'HF full image'); }catch(_){ } });
+      btnFact.addEventListener('touchstart', (e)=>{ e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-hf.png', 'HF full image'); }catch(_){ } });
+      btnFact.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-hf.png', 'HF full image'); }catch(_){ } } });
 
       toggleWrapFact.appendChild(iconBoxFact);
-      toggleWrapFact.appendChild(descFact);
-      // ensure it uses the lowered positioning so it aligns with page 6 area
+      // ensure it uses the lowered positioning so it aligns with nearby pages
       toggleWrapFact.classList.add('lowered-toggle');
       wrapper.appendChild(toggleWrapFact);
     }
