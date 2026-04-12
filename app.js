@@ -4,6 +4,8 @@ const IMAGE_FOLDER = 'assets/images/a-is-for-apple-pie/';
 
 // UI configuration: number of words to group per logical line when wrapping descriptions
 const WORDS_PER_LINE = 10;
+// When a description's logical lines exceed this value, split into two columns.
+const LINES_TO_SPLIT = 5;
 
 // flipbook variables (fallback)
 let images = [];
@@ -243,9 +245,9 @@ function renderSingle(){
       lines.push(words.slice(i, i + WORDS_PER_LINE).join(' '));
     }
 
-    // If the description generates 5 lines or fewer, keep it as a single block.
-    // Otherwise split into two roughly equal halves for left and right columns.
-    if(lines.length <= 5){
+  // If the description generates LINES_TO_SPLIT lines or fewer, keep it as a single block.
+  // Otherwise split into two roughly equal halves for left and right columns.
+  if(lines.length <= LINES_TO_SPLIT){
       // Render as explicit lines (one <p> per logical line) so the 10-words
       // grouping is visible even when we don't split into two columns.
       lines.forEach(line => {
@@ -294,7 +296,7 @@ function renderSingle(){
       lines3.push(words3.slice(i, i + WORDS_PER_LINE).join(' '));
     }
 
-    if(lines3.length <= 5){
+  if(lines3.length <= LINES_TO_SPLIT){
       // render explicit logical lines so grouping is visible
       lines3.forEach(line => { const p = document.createElement('p'); p.textContent = line; desc3.appendChild(p); });
     } else {
@@ -326,7 +328,7 @@ function renderSingle(){
     for(let i = 0; i < words4.length; i += WORDS_PER_LINE){
       lines4.push(words4.slice(i, i + WORDS_PER_LINE).join(' '));
     }
-    if(lines4.length <= 5){
+  if(lines4.length <= LINES_TO_SPLIT){
       lines4.forEach(line => { const p = document.createElement('p'); p.textContent = line; desc4.appendChild(p); });
     } else {
       desc4.classList.add('split-columns');
@@ -356,7 +358,7 @@ function renderSingle(){
     for(let i = 0; i < words5.length; i += WORDS_PER_LINE){
       lines5.push(words5.slice(i, i + WORDS_PER_LINE).join(' '));
     }
-    if(lines5.length <= 5){
+  if(lines5.length <= LINES_TO_SPLIT){
       lines5.forEach(line => { const p = document.createElement('p'); p.textContent = line; desc5.appendChild(p); });
     } else {
       desc5.classList.add('split-columns');
@@ -386,7 +388,7 @@ function renderSingle(){
     for(let i = 0; i < words6.length; i += WORDS_PER_LINE){
       lines6.push(words6.slice(i, i + WORDS_PER_LINE).join(' '));
     }
-    if(lines6.length <= 5){
+  if(lines6.length <= LINES_TO_SPLIT){
       lines6.forEach(line => { const p = document.createElement('p'); p.textContent = line; desc6.appendChild(p); });
     } else {
       desc6.classList.add('split-columns');
