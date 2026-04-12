@@ -432,6 +432,14 @@ function renderSingle(){
     iconBox.appendChild(label7);
 
     toggleWrap.appendChild(iconBox);
+    // wire the button to open a full-screen overlay of the hover image when tapped
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      try{ openFullScreenImage(IMAGE_FOLDER + 'hover-fdr.png', 'FDR full image'); }catch(_){ }
+    });
+    btn.addEventListener('touchstart', (e) => { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-fdr.png', 'FDR full image'); }catch(_){ } });
+    btn.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); try{ openFullScreenImage(IMAGE_FOLDER + 'hover-fdr.png', 'FDR full image'); }catch(_){ } } });
+
     // keep the lowered placement so visual alignment stays consistent with nearby pages
     toggleWrap.classList.add('lowered-toggle');
     wrapper.appendChild(toggleWrap);
@@ -451,7 +459,7 @@ function renderSingle(){
 
     const icon8 = document.createElement('img');
     // use the provided file from the collection folder
-    icon8.src = IMAGE_FOLDER + 'Banjo.png';
+  icon8.src = IMAGE_FOLDER + 'sf.png';
     icon8.alt = 'Banjo image';
     btn8.appendChild(icon8);
 
@@ -719,6 +727,86 @@ function closeLightbox(){
 }
 
 lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+
+// Open an overlay image (arbitrary src). This shows the existing `lightbox` element
+// and installs a one-time listener so tapping anywhere (or pressing certain keys)
+// closes the overlay.
+function openOverlayImage(src, alt){
+  if(!lightbox) return;
+  lbImg.src = src;
+  lbImg.alt = alt || '';
+  lightbox.hidden = false;
+
+  // Close handler that runs on any click inside the lightbox and removes itself.
+  function closeAny(){
+    try{ closeLightbox(); }catch(_){ }
+    lightbox.removeEventListener('click', closeAny);
+    document.removeEventListener('keydown', keyHandler);
+  }
+
+  function keyHandler(e){
+    if(e.key === 'Escape' || e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      closeAny();
+    }
+  }
+
+  // Install listeners. We intentionally close on any click (not only backdrop)
+  // so tapping the image also returns the user to the page.
+  lightbox.addEventListener('click', closeAny);
+  document.addEventListener('keydown', keyHandler);
+}
+
+// Open a full-viewport overlay showing a single image. Clicking or pressing
+// Escape/Enter/Space will close it. This is separate from the existing
+// `lightbox` element to ensure the overlay covers the entire screen.
+function openFullScreenImage(src, alt){
+  if(!document || !document.body) return;
+  let overlay = document.getElementById('fullOverlay');
+  let imgEl = null;
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.id = 'fullOverlay';
+    Object.assign(overlay.style, {
+      position: 'fixed',
+      inset: '0px',
+      background: 'rgba(0,0,0,0.85)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: '99999',
+      cursor: 'zoom-out'
+    });
+    imgEl = document.createElement('img');
+    imgEl.id = 'fullOverlayImg';
+    Object.assign(imgEl.style, {
+      maxWidth: '95vw',
+      maxHeight: '95vh',
+      width: 'auto',
+      height: 'auto',
+      boxShadow: '0 8px 24px rgba(0,0,0,0.6)'
+    });
+    overlay.appendChild(imgEl);
+    document.body.appendChild(overlay);
+  } else {
+    imgEl = document.getElementById('fullOverlayImg');
+  }
+
+  if(!imgEl) return;
+  imgEl.src = src;
+  imgEl.alt = alt || '';
+  overlay.style.display = 'flex';
+
+  function removeOverlay(){
+    overlay.style.display = 'none';
+    overlay.removeEventListener('click', removeOverlay);
+    document.removeEventListener('keydown', keyHandler);
+  }
+  function keyHandler(e){ if(e.key === 'Escape' || e.key === 'Enter' || e.key === ' '){ e.preventDefault(); removeOverlay(); } }
+
+  overlay.addEventListener('click', removeOverlay);
+  document.addEventListener('keydown', keyHandler);
+}
 
 function lightboxNext(){
   if(images.length === 0) return;
