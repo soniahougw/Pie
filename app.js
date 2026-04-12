@@ -406,21 +406,20 @@ function renderSingle(){
     wrapper.appendChild(desc6);
   }
 
-  // Add an icon-button which toggles a pop-out description on the seventh page (index 6)
-  if(current === 6){
+  // Page 7 (index 6): show the icon and label only — no descriptive pop-out
+  if (current === 6) {
     const toggleWrap = document.createElement('div');
     toggleWrap.className = 'page-toggle';
 
     const btn = document.createElement('button');
     btn.className = 'icon-button';
     btn.type = 'button';
-    btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-label', 'Show FDR note');
+    btn.setAttribute('aria-label', 'FDR image');
 
-  const icon = document.createElement('img');
-  // use the requested file name from the collection folder
-  icon.src = IMAGE_FOLDER + 'fdr.png';
-  icon.alt = 'FDR image';
+    const icon = document.createElement('img');
+    // use the requested file name from the collection folder
+    icon.src = IMAGE_FOLDER + 'fdr.png';
+    icon.alt = 'FDR image';
     btn.appendChild(icon);
 
     // create an icon box that holds the button and a label beneath it
@@ -432,38 +431,8 @@ function renderSingle(){
     label7.textContent = 'FDR President';
     iconBox.appendChild(label7);
 
-  const desc7 = document.createElement('div');
-  // make the NPR citation its own third line and right-align the block
-    desc7.className = 'page-desc collapsed';
-    desc7.classList.add('no-bg');
-    desc7.innerHTML = `
-      <div class="desc-main">During the Great Depression, Barnes notes that President Franklin D. Roosevelt's Works Progress Administration sought to "preserve American heritage" by promoting blackface.</div>
-      <div class="desc-cite">-NPR Article: This historian dug up the hidden history of 'amateur' blackface in America</div>
-    `;
-  // keep page 7's pop-out description in-flow (beside the button) rather than fixed at 66vh
-  if(current >= 2 && current <= 15 && current !== 6) desc7.classList.add('fixed-at-66');
-
-    function toggleDesc7(){
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      desc7.classList.toggle('collapsed');
-      // ensure style state for older browsers
-      if(desc7.classList.contains('collapsed')){
-        desc7.style.display = 'none';
-      } else {
-        desc7.style.display = '';
-      }
-      // reset idle timer so it doesn't immediately return to intro while reading
-      try{ resetIdleTimer(); }catch(_){ }
-    }
-    btn.addEventListener('click', toggleDesc7);
-    // also handle touchstart for better responsiveness on mobile and keyboard
-    btn.addEventListener('touchstart', (e)=>{ e.preventDefault(); toggleDesc7(); });
-    btn.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDesc7(); } });
-
-  toggleWrap.appendChild(iconBox);
-  toggleWrap.appendChild(desc7);
-    // lower the toggle so it sits below the main image area (below ~68% of viewport)
+    toggleWrap.appendChild(iconBox);
+    // keep the lowered placement so visual alignment stays consistent with nearby pages
     toggleWrap.classList.add('lowered-toggle');
     wrapper.appendChild(toggleWrap);
   }
