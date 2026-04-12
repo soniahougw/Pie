@@ -415,10 +415,10 @@ function renderSingle(){
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-label', 'Show FDR note');
 
-    const icon = document.createElement('img');
-    // use the provided file from the collection folder
-    icon.src = IMAGE_FOLDER + 'FDR 1.png';
-    icon.alt = 'FDR image';
+  const icon = document.createElement('img');
+  // use the requested file name from the collection folder
+  icon.src = IMAGE_FOLDER + 'fdr.png';
+  icon.alt = 'FDR image';
     btn.appendChild(icon);
 
     // create an icon box that holds the button and a label beneath it
