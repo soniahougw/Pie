@@ -177,6 +177,26 @@ body{font-family:'DM Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Hel
 .page-desc.split-columns .desc-left,.page-desc.split-columns .desc-right{flex:1}
 .page-desc.split-columns p{margin:4px 0;font-size:15px;line-height:1.4}
 
+/* Slightly larger gap for pages 2-6 (data-page indices 1-5) to space the
+   two chunks more prominently for those descriptive pages. Reduce on small
+   screens so layout remains usable. */
+.single-inner[data-page="1"] .page-desc.split-columns,
+.single-inner[data-page="2"] .page-desc.split-columns,
+.single-inner[data-page="3"] .page-desc.split-columns,
+.single-inner[data-page="4"] .page-desc.split-columns,
+.single-inner[data-page="5"] .page-desc.split-columns{
+  gap:32px;
+}
+@media (max-width:720px){
+  .single-inner[data-page="1"] .page-desc.split-columns,
+  .single-inner[data-page="2"] .page-desc.split-columns,
+  .single-inner[data-page="3"] .page-desc.split-columns,
+  .single-inner[data-page="4"] .page-desc.split-columns,
+  .single-inner[data-page="5"] .page-desc.split-columns{
+    gap:16px;
+  }
+}
+
 /* remove visible frame/background for specific pages when desired */
 .page-desc.no-bg{background:transparent;border:none;box-shadow:none;padding:8px 0;color:#274737}
 
