@@ -171,7 +171,7 @@ fetch(IMAGE_FOLDER + 'manifest.json').then(res => {
   }
 }).catch((err) => {
   // No manifest available or fetch failed: fallback to flipbook with helpful message
-  console.warn('manifest fetch failed:', err);
+  //console.warn('manifest fetch failed:', err);
   if(collectionStatus) collectionStatus.textContent = 'No manifest found. Run `./copy_images.sh "/path/to/source"` from the project root to import images.';
   if(gallery) gallery.classList.add('hidden');
   if(book) book.classList.remove('hidden');
