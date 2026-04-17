@@ -1,5 +1,5 @@
 // Viewer + gallery loader for a collection
-const COLLECTION_NAME = 'A is for Apple Pie';
+const COLLECTION_NAME = 'A Apple Pie';
 const IMAGE_FOLDER = 'assets/images/a-is-for-apple-pie/';
 
 // UI configuration: number of words to group per logical line when wrapping descriptions
